@@ -1,0 +1,32 @@
+generator photon {
+  provider = "photonjs"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:dev.db"
+}
+
+model Item {
+  id           String   @default(cuid()) @id
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  purchaseDate DateTime?
+  name         String
+  type         ItemType
+  locatedIn    Room?
+  price        Float?
+}
+
+model ItemType {
+  id    String @default(cuid()) @id
+  name  String @unique
+  items Item[]
+}
+
+model Room {
+  id          String  @default(cuid()) @id
+  name        String  @unique
+  items       Item[]
+  meetingRoom Boolean
+}
